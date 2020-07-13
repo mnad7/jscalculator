@@ -18,7 +18,15 @@ function operate(operator, a, b) {
 } 
 
 function addDecimal() {
-    mDisplay += '.';
+    if(mDisplay.length == 0 || mDisplay[mDisplay.length - 1] == ' ') {
+        mDisplay += '0.';
+    } else if(!isNaN(mDisplay[mDisplay.length - 1])) {
+        const splitDot = mDisplay.split('.');
+        if(splitDot[splitDot.length - 1] == undefined || splitDot[splitDot.length - 1].includes(' ') || splitDot.length == 1)
+        {
+            mDisplay += '.';
+        }
+    }
 }
 
 let lDisplay = "";
@@ -31,7 +39,7 @@ function clear() {
     mDisplay = "";
 }
 function del() {
-    if(isNaN(mDisplay[mDisplay.length - 1])) {
+    if(mDisplay[mDisplay.length - 1] == ' ') {
         mDisplay = mDisplay.substr(0, mDisplay.length - 3);
     } else {
         mDisplay = mDisplay.substr(0, mDisplay.length - 1);
@@ -59,7 +67,7 @@ buttons.forEach(button => {
             calculate();
         } else if(value == '.') { 
             addDecimal();
-        } else {
+        } else if(!isNaN(mDisplay[mDisplay.length - 2])){
             mDisplay += ' ' + value + ' ';
         }
         populate();
@@ -75,6 +83,9 @@ function populate() {
 }
 function calculate() {
     //console.log("calculating");
+    if(!mDisplay.includes(' ')) {
+        return;
+    }
     if(mDisplay[mDisplay.length - 1] != ' ') {
         const input = mDisplay.split(' ');
         input.forEach(x => {
