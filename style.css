@@ -1,0 +1,20 @@
+#container {
+    margin: auto auto;
+}
+
+#display {
+    margin: auto auto;
+    width: auto;
+    height: 100px;
+}
+
+#numpad {
+    margin: auto auto;
+    display: grid;
+    grid-template-columns: 50px 50px 50px 50px;
+}
+
+.thicc {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
