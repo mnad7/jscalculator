@@ -67,7 +67,7 @@ buttons.forEach(button => {
             calculate();
         } else if(value == '.') { 
             addDecimal();
-        } else if(!isNaN(mDisplay[mDisplay.length - 2])){
+        } else if(!isNaN(mDisplay[mDisplay.length - 1])){
             mDisplay += ' ' + value + ' ';
         }
         populate();
@@ -89,11 +89,10 @@ function calculate() {
     if(mDisplay[mDisplay.length - 1] != ' ') {
         const input = mDisplay.split(' ');
         input.forEach(x => {
-            if(isNaN(x)) {
-                ops.push(x);
-            }
-            else {
-                vals.push(x)
+            if(x.includes('e') || !isNaN(x)) {
+                vals.push(x);
+            } else {
+                ops.push(x)
             }
         });
     }
@@ -106,7 +105,11 @@ function calculate() {
     operateAll('*', '/');
     operateAll('+', '-');
     lDisplay = mDisplay;
-    mDisplay = vals[0];
+    mDisplay = vals[0].toString();
+    if(mDisplay.includes('.') && mDisplay.split('.')[1].length > 11)
+    {
+        mDisplay = vals[0].toFixed(11).toString();
+    }
     populate();
     ops = [];
     vals = [];
