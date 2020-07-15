@@ -7,7 +7,7 @@ function operate(operator, a, b) {
             return a + b;
         case '-':
             return a - b;
-        case '*':
+        case 'x':
             return a * b;
         case '/':
             if(b === 0) {
@@ -46,7 +46,7 @@ function del() {
     }
 }
 const buttons = document.querySelectorAll('button');
-const buttonValues = ['C', 'del', '/', '7', '8', '9', '*', '4', '5', '6', '+', '1', '2', '3', '-', '0', '.', 'E'];
+const buttonValues = ['C', 'del', '/', '7', '8', '9', 'x', '4', '5', '6', '+', '1', '2', '3', '-', '0', '.', 'E'];
 
 let i = 0;
 buttons.forEach(button => {
@@ -67,7 +67,7 @@ buttons.forEach(button => {
             calculate();
         } else if(value == '.') { 
             addDecimal();
-        } else if(!isNaN(mDisplay[mDisplay.length - 1])){
+        } else if(!isNaN(mDisplay[mDisplay.length - 1]) && mDisplay[mDisplay.length - 1] != ' '){
             mDisplay += ' ' + value + ' ';
         }
         populate();
@@ -102,13 +102,13 @@ function calculate() {
         vals = [];
         return;
     }
-    operateAll('*', '/');
+    operateAll('x', '/');
     operateAll('+', '-');
     lDisplay = mDisplay;
     mDisplay = vals[0].toString();
-    if(mDisplay.includes('.') && mDisplay.split('.')[1].length > 11)
+    if(mDisplay.includes('.') && mDisplay.split('.')[1].length > 6)
     {
-        mDisplay = vals[0].toFixed(11).toString();
+        mDisplay = vals[0].toFixed(6).toString();
     }
     populate();
     ops = [];
